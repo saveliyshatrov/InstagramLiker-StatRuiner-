@@ -7,7 +7,7 @@ import os
 
 username = ''
 password = ''
-hashtags = ['eye', 'photo', 'macro', 'hazel']
+hashtags = ['photos', 'photography']
 urlTag = 'https://www.instagram.com/explore/tags/'
 
 def Sleep(time: int, showStat: bool = False, now: int = 0, _all: int = 0) -> None:
@@ -26,15 +26,11 @@ driver = webdriver.Firefox()
 driver.get("http://www.instagram.com")
 
 Sleep(10)
-os.system('cls' if os.name == 'nt' else 'clear')
 
-Username = driver.find_element_by_name('username')
-Password = driver.find_element_by_name('password')
+driver.find_element_by_xpath('/html/body/div[1]/section/main/article/div[2]/div[1]/div/form/div/div[1]/div/label/input').send_keys(username)
+driver.find_element_by_xpath('/html/body/div[1]/section/main/article/div[2]/div[1]/div/form/div/div[2]/div/label/input').send_keys(password)
 
-
-Username.send_keys(username)
 print("Username entered")
-Password.send_keys(password)
 print("Password entered")
 
 driver.find_element_by_xpath("/html/body/div[1]/section/main/article/div[2]/div[1]/div/form/div/div[3]/button").click()
@@ -44,7 +40,7 @@ Sleep(5)
 #driver.find_element_by_xpath("/html/body/div[4]/div/div/div/div[3]/button[2]").click()
 
 for hashtag in hashtags:
-    HowManyToLike = 100
+    HowManyToLike = 300
     HowManyLiked = 0
     driver.get(urlTag + hashtag + "/")
     Sleep(5)
@@ -61,6 +57,7 @@ for hashtag in hashtags:
             HowManyLiked += 1
             Sleep(3, True, HowManyLiked, HowManyToLike)
         except Exception:
-            pass
+            driver.find_element_by_xpath("/html/body/div[4]/div[1]/div/div/a[2]").click()
+            Sleep(3, True, HowManyLiked, HowManyToLike)
         #/html/body/div[4]/div[1]/div/div/a
     #/html/body/div[4]/div[2]/div/article/div[3]/section[1]/span[1]
